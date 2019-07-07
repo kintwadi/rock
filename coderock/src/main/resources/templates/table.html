@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Page Title</title>
+    <style>
+        .center {
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <label>Add entry</label>
+        <input type="text" id="input_value" />
+        <input type="button" id="add_btn" value="Add" />
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Select</th>
+                    <th scope="col">#</th>
+
+                </tr>
+            </thead>
+            <tbody id="table_entries">
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <script>
+
+        function loopOverTable() {
+
+
+            let tableBody = document.querySelector("#table_entries");
+
+            // for (var i = 0, row; row = tableBody.rows[i]; i++) {
+
+            // let rows = tableBody.rows[i];
+            //iterate through rows
+            //rows would be accessed using the "row" variable assigned in the for loop
+            //console.log(rows.rowIndex);
+            // console.log(tableBody.rows[i].cells[i].cellsIndex);
+            //  for (var j = 0, col; col = row.cells[j]; j++) {
+            //  console.log(row.cells[j].childNodes[j].value);
+            //console.log(row.cells[j].cellIndex);
+            //iterate through columns
+            //columns would be accessed using the "col" variable assigned in the for loop
+            //}
+            // }
+
+
+            // for (var i = 0, row; row = tableBody.rows[i]; i++) {
+            //var x = row.cells[i].innerText;
+
+            //console.log(x);
+
+
+            //}
+
+
+
+
+        }
+
+        function deleteRow(el) {
+
+            var tbl = el.parentNode.parentNode.parentNode;
+            var row = el.parentNode.parentNode.rowIndex;
+            if(tbl.rows.length == row){
+                row = row -1;
+                tbl.deleteRow(row); 
+            }else{
+
+                tbl.deleteRow(row);
+            }
+        
+        }
+        function getSelected(e) {
+
+            console.log("class: " + e.currentTarget.className);
+
+
+        }
+
+        function loadTable(tableBody, val) {
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");// currency
+            let td2 = document.createElement("td");// default
+            let td3 = document.createElement("td");// detele
+            let label1 = document.createElement("label");
+            label1.appendChild(document.createTextNode(val));
+            let btn = document.createElement("input");
+            btn.type = "button";
+            btn.value = "Delete";
+            btn.setAttribute('onclick','deleteRow(this)');
+        
+
+            //btn.addEventListener("click", deleteRow);
+
+            let check = document.createElement("input");
+            check.type = "radio";
+            check.name = "default";
+            check.setAttribute("class", val);
+            //check.class = val;
+            check.addEventListener("click", getSelected);
+
+
+            td1.appendChild(label1);
+            td2.appendChild(check);
+            td3.appendChild(btn);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tableBody.appendChild(tr);
+        }
+
+        let tableBody = document.querySelector("#table_entries");
+        tableBody.innerHTML = "";
+        loadTable(tableBody, "USD");
+        loadTable(tableBody, "EURO");
+        loadTable(tableBody, "KWZ");
+        loadTable(tableBody, "RAND");
+
+        function addTableEntry() {
+            let tableBody = document.querySelector("#table_entries");
+            let data = document.querySelector("#input_value");
+            loadTable(tableBody, data.value, "delelete");
+
+        }
+
+        let add_btn = document.querySelector("#add_btn");
+        add_btn.addEventListener("click", addTableEntry);
+        loopOverTable();
+
+    </script>
+
+
+</body>
+
+</html>

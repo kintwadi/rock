@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<head th:include="resources::static">
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav"></div>
+		</div>
+	</nav>
+	<hr />
+
+	<div class="container">
+		<img alt="" th:src="@{/application/images/me.jpeg}" class="rounded"
+			width="100px" style="float: left" /> <br />
+		<br />
+		<br />
+		<br />
+		<hr />
+		<div class="container center_container" id="card">One of three
+			columns</div>
+			
+			<button id="btn">post</button>
+
+	</div>
+	
+	<script type="text/javascript" th:src="@{jquery/jquery-3.3.1.min.js}"></script>
+
+<script type="text/javascript">
+function open(e) {
+
+	alert(e.innerHTML);
+}
+
+var btn = document.querySelector("#btn");
+btn.addEventListener('click', post);
+
+function post(e) {
+	
+	
+	var data = {
+			name : "Donald Duck",
+			company : "Duckburg"
+	};
+	$.ajax({
+		
+	    url: 'load',
+	    dataType: 'json',
+	    type: 'post',
+	    contentType: 'application/json',
+	    data: JSON.stringify(data),
+	    processData: false,
+	    success: function( data, textStatus, jQxhr ){
+	       console.log("response: "+ JSON.stringify(data));
+	    },
+	    error: function( jqXhr, textStatus, errorThrown ){
+	        console.log( errorThrown );
+	    }
+	});
+
+	/* $("#btn").click(function() {
+		var data = {
+			name : "Donald Duck",
+			city : "Duckburg"
+			};
+		$.post("load", data, function(data, status) {
+			
+			alert("Data: " + data + "\nStatus: " + status);
+		});
+	}); */
+}
+	</script>
+</body>
+</html>
